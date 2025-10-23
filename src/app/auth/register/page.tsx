@@ -19,7 +19,6 @@ export default function RegisterPage() {
   
     setForm(prev => ({ ...prev, [name]: value }));
   
-    // Remove error for this field as soon as user fixes it
     setErrors(prev => {
       const newErrors = { ...prev };
       delete newErrors[name];
@@ -49,7 +48,7 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-  
+
     try {
       const res = await fetch("/api/auth/register", {
         method: "POST",
@@ -58,28 +57,26 @@ export default function RegisterPage() {
           firstName: form.firstName,
           lastName: form.lastName,
           email: form.email,
-          phoneNumber: form.phone, // API expects phoneNumber
+          phoneNumber: form.phone,
           password: form.password,
         }),
       });
-  
+
       const data = await res.json();
-  
+
       if (!res.ok) {
         alert(data.error || "Registration failed");
         return;
       }
 
-       //Clear all form fields
-    setForm({
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      password: "",
-    });
+      setForm({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        password: "",
+      });
 
-  
       alert("Registration successful!");
     } catch (err) {
       console.error(err);
@@ -87,82 +84,172 @@ export default function RegisterPage() {
     }
   };
 
+
+
+
+  // return (
+  //   <div className="min-h-screen flex items-center justify-center bg-gray-100">
+  //     <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+  //       <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+  //       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          
+  //         <div>
+  //           <input
+  //             name="firstName"
+  //             placeholder="First Name"
+  //             value={form.firstName}
+  //             onChange={handleChange}
+  //             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           />
+  //           {errors.firstName && <small className="text-red-500">{errors.firstName}</small>}
+  //         </div>
+
+  //         <div>
+  //           <input
+  //             name="lastName"
+  //             placeholder="Last Name" 
+  //             value={form.lastName}
+  //             onChange={handleChange}
+  //             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           />
+  //           {errors.lastName && <small className="text-red-500">{errors.lastName}</small>}
+  //         </div>
+
+  //         <div>
+  //           <input
+  //             name="email"
+  //             type="email"
+  //             placeholder="Email"
+  //             value={form.email}
+  //             onChange={handleChange}
+  //             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           />
+  //           {errors.email && <small className="text-red-500">{errors.email}</small>}
+  //         </div>
+
+  //         <div>
+  //           <input
+  //             name="phone"
+  //             placeholder="Phone Number"
+  //             value={form.phone}
+  //             onChange={handleChange}
+  //             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           />
+  //           {errors.phone && <small className="text-red-500">{errors.phone}</small>}
+  //         </div>
+
+  //         <div>
+  //           <input
+  //             type="password"
+  //             name="password"
+  //             placeholder="Password"
+  //             value={form.password}
+  //             onChange={handleChange}
+  //             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  //           />
+  //           {errors.password && <small className="text-red-500">{errors.password}</small>}
+  //         </div>
+
+  //         <button
+  //           type="submit"
+  //           className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+  //         >
+  //           Register
+  //         </button>
+  //       </form>
+  //       <p className="mt-4 text-center text-gray-600">
+  //       Already have an account?{" "}
+  //       <Link href="/auth/login" className="text-blue-500 hover:underline">
+  //         Login
+  //       </Link>
+  //     </p>
+  //     </div>
+  //   </div>
+  // );
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center text-black">Register</h2>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          
+
           <div>
+            <label className="block text-black font-bold mb-1">First Name</label>
             <input
               name="firstName"
-              placeholder="First Name"
+              placeholder="Enter your first name"
               value={form.firstName}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.firstName && <small className="text-red-500">{errors.firstName}</small>}
+            {errors.firstName && <small className="text-black font-bold">{errors.firstName}</small>}
           </div>
 
           <div>
+            <label className="block text-black font-bold mb-1">Last Name</label>
             <input
               name="lastName"
-              placeholder="Last Name" 
+              placeholder="Enter your last name"
               value={form.lastName}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.lastName && <small className="text-red-500">{errors.lastName}</small>}
+            {errors.lastName && <small className="text-black font-bold">{errors.lastName}</small>}
           </div>
 
           <div>
+            <label className="block text-black font-bold mb-1">Email</label>
             <input
               name="email"
               type="email"
-              placeholder="Email"
+              placeholder="Enter your email"
               value={form.email}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.email && <small className="text-red-500">{errors.email}</small>}
+            {errors.email && <small className="text-black font-bold">{errors.email}</small>}
           </div>
 
           <div>
+            <label className="block text-black font-bold mb-1">Phone Number</label>
             <input
               name="phone"
-              placeholder="Phone Number"
+              placeholder="Enter your phone number"
               value={form.phone}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.phone && <small className="text-red-500">{errors.phone}</small>}
+            {errors.phone && <small className="text-black font-bold">{errors.phone}</small>}
           </div>
 
           <div>
+            <label className="block text-black font-bold mb-1">Password</label>
             <input
               type="password"
               name="password"
-              placeholder="Password"
+              placeholder="Enter your password"
               value={form.password}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded px-3 py-2 text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            {errors.password && <small className="text-red-500">{errors.password}</small>}
+            {errors.password && <small className="text-black font-bold">{errors.password}</small>}
           </div>
 
           <button
             type="submit"
-            className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition-colors font-bold"
           >
             Register
           </button>
         </form>
+
         <p className="mt-4 text-center text-gray-600">
-        Already have an account?{" "}
-        <Link href="/auth/login" className="text-blue-500 hover:underline">
-          Login
-        </Link>
-      </p>
+          Already have an account?{" "}
+          <Link href="/auth/login" className="text-blue-500 hover:underline font-bold">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
